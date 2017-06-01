@@ -1,6 +1,8 @@
 
 package com.bmamone;
 
+import android.widget.Toast;
+
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
@@ -18,5 +20,10 @@ public class RNPagarmeMposModule extends ReactContextBaseJavaModule {
   @Override
   public String getName() {
     return "RNPagarmeMpos";
+  }
+
+  @ReactMethod
+  public void show(String message, int duration) {
+    Toast.makeText(getReactApplicationContext(), message, duration).show();
   }
 }
