@@ -2,6 +2,7 @@
 package com.bmamone;
 
 import android.widget.Toast;
+import java.util.Set;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -46,6 +47,6 @@ public class RNPagarmeMposModule extends ReactContextBaseJavaModule {
           Toast.makeText(getReactApplicationContext(), deviceName + " " + deviceHardwareAddress, duration).show();
       }
     }
-    Toast.makeText(getReactApplicationContext(), message, duration).show();
+    Toast.makeText(getReactApplicationContext(), Integer.toString(pairedDevices.size()) + " dispositivos", duration).show();
   }
 }
