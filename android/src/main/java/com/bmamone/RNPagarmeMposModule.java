@@ -49,7 +49,7 @@ public class RNPagarmeMposModule extends ReactContextBaseJavaModule {
     //       Toast.makeText(getReactApplicationContext(), deviceName + " " + deviceHardwareAddress, duration).show();
     //   }
     // }
+    Toast.makeText(getReactApplicationContext(), Integer.toString(pairedDevices.size()) + " dispositivos", 1).show();
     successCallback.invoke(pairedDevices);
-    Toast.makeText(getReactApplicationContext(), Integer.toString(pairedDevices.size()) + " dispositivos", duration).show();
   }
 }
