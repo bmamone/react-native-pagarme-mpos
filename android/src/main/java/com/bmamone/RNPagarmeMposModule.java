@@ -12,11 +12,13 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 
 import com.facebook.react.bridge.ActivityEventListener;
+import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.ReadableArray;
+import com.facebook.react.bridge.WritableArray;
 
 public class RNPagarmeMposModule extends ReactContextBaseJavaModule {
   static final int REQUEST_ENABLE_BT = 1;
@@ -46,10 +48,11 @@ public class RNPagarmeMposModule extends ReactContextBaseJavaModule {
         currentActivity.startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
     }
     Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
-    ArrayList<String> devices = new ArrayList<String>();
+    WritableArray devices = Arguments.createArray();
+
     if (pairedDevices.size() > 0) {
         for (BluetoothDevice device : pairedDevices) {
-            devices.add(device.getName());
+            devices.pushString(device.getName());
         }
     }
     Toast.makeText(getReactApplicationContext(), Integer.toString(pairedDevices.size()) + " dispositivos", 1).show();
