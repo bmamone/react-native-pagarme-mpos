@@ -4,6 +4,8 @@ package com.bmamone;
 import android.app.Activity;
 import android.content.Intent;
 import android.widget.Toast;
+
+import java.util.ArrayList;
 import java.util.Set;
 
 import android.bluetooth.BluetoothAdapter;
@@ -14,6 +16,7 @@ import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.Callback;
+import com.facebook.react.bridge.ReadableArray;
 
 public class RNPagarmeMposModule extends ReactContextBaseJavaModule {
   static final int REQUEST_ENABLE_BT = 1;
@@ -37,23 +40,20 @@ public class RNPagarmeMposModule extends ReactContextBaseJavaModule {
 
   @ReactMethod
   public void getPairedDevices(Callback errorCallback, Callback successCallback) {
-      Activity currentActivity = getCurrentActivity();
+    Activity currentActivity = getCurrentActivity();
     if (!mBluetoothAdapter.isEnabled()) {
         Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
         currentActivity.startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
     }
     Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
-
-    // if (pairedDevices.size() > 0) {
-    //   // There are paired devices. Get the name and address of each paired device.
-    //   for (BluetoothDevice device : pairedDevices) {
-    //       String deviceName = device.getName();
-    //       String deviceHardwareAddress = device.getAddress(); // MAC address
-    //       Toast.makeText(getReactApplicationContext(), deviceName + " " + deviceHardwareAddress, duration).show();
-    //   }
-    // }
+    ArrayList<String> devices = new ArrayList<String>();
+    if (pairedDevices.size() > 0) {
+        for (BluetoothDevice device : pairedDevices) {
+            devices.add(device.getName());
+        }
+    }
     Toast.makeText(getReactApplicationContext(), Integer.toString(pairedDevices.size()) + " dispositivos", 1).show();
-    successCallback.invoke(pairedDevices.toArray());
+    successCallback.invoke(devices);
   }
 
   @ReactMethod
