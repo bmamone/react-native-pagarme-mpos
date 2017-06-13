@@ -65,7 +65,6 @@ public class RNPagarmeMposModule extends ReactContextBaseJavaModule {
 
   @ReactMethod
   public void getNearbyDevices(Callback errorCallback, Callback successCallback) {
-    BluetoothAdapter.startDiscovery();
 
   }
 
