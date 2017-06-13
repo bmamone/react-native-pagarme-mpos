@@ -19,6 +19,7 @@ import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.WritableArray;
+import com.facebook.react.bridge.WritableMap;
 
 public class RNPagarmeMposModule extends ReactContextBaseJavaModule {
   static final int REQUEST_ENABLE_BT = 1;
@@ -52,7 +53,10 @@ public class RNPagarmeMposModule extends ReactContextBaseJavaModule {
 
     if (pairedDevices.size() > 0) {
         for (BluetoothDevice device : pairedDevices) {
-            devices.pushString(device.getName());
+            WritableMap _device = Arguments.createMap();
+            _device.putString("name", device.getName());
+            _device.putString("address", device.getAddress());
+            devices.pushMap(_device);
         }
     }
     Toast.makeText(getReactApplicationContext(), Integer.toString(pairedDevices.size()) + " dispositivos", 1).show();
@@ -60,7 +64,10 @@ public class RNPagarmeMposModule extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod
-  public void getNearbyDevices(Callback errorCallback, Callback successCallback) {}
+  public void getNearbyDevices(Callback errorCallback, Callback successCallback) {
+    BluetoothAdapter.startDiscovery();
+
+  }
 
   @ReactMethod
   public void pairWithDevice(String deviceAddress) {}
